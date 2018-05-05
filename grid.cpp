@@ -40,6 +40,7 @@ Grid::Grid(int nr, int nc)
 		}
 	}
 	adj.push_back(count);
+	selected.assign(num_rows*num_columns, false);
 }
 
 Grid::~Grid()
@@ -58,12 +59,18 @@ void Grid::render(int pixel_size)
 	for (int i = 0; i < num_rows; ++i) {
 		for (int j = 0; j < num_columns; ++j) {
 			int v = i*num_columns + j;
-			pgm_set_pixel(img, 2*i+1, 2*j+1, GREY);
+			pgm_set_pixel(img, 2*i+1, 2*j+1, selected[v]? GREY:WHITE);
 			
 			for (int k = adj[v]; k < adj[v+1]; ++k) {
 				Vertex u = edges[k]->head;
+				Vertex v = edges[k]->tail;
+				int u_index = u.x * num_columns + u.y;
+				int v_index = v.x * num_columns + v.y;
+
+				int color = (selected[u_index] && selected[v_index])? GREY :
+					(edges[k]->selected ? WHITE : BLACK);
 				// cout << "("<< i <<","<<j<<")" << " - " << "("<< u.x <<","<<u.y<<")" << edges[k]->selected << endl;
-				pgm_set_pixel(img, (2*(i+u.x)+2)/2, (2*(j+u.y)+2)/2, (edges[k]->selected ? GREY : BLACK));
+				pgm_set_pixel(img, (2*(i+u.x)+2)/2, (2*(j+u.y)+2)/2, color);
 			}
 		}
 	}

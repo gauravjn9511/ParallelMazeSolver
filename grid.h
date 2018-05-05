@@ -27,9 +27,11 @@ public:
 	int num_rows, num_columns;
 	std::vector<int> adj;
 	std::vector<Edge *> edges;
+	std::vector<bool> selected;
 	Grid(int num_rows, int num_columns);
 	~Grid();
 	void render(int pixel_size);
 	void kruskalMST();
-	void select_reverse_edge(int u_x, int u_y, int v_x, int v_y);
+	void select_reverse_edge(Vertex u, Vertex v);
+	void dijkstraShortestPath(Vertex src);
 };

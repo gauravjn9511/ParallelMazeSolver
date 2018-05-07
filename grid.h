@@ -1,5 +1,7 @@
 #include <vector>
 
+#define SEED 42L
+
 class Vertex
 {
 public:

@@ -1,3 +1,4 @@
+#include <stdlib.h>
 #include <iostream>
 #include <unistd.h>
 #include <sys/time.h>
@@ -28,7 +29,15 @@ public:
 
 int main(int argc, char const *argv[])
 {
-	Grid grid(50, 50);
+	if(argc <= 3) {
+		cout<<"usage: "<<argv[0]<<" <num_rows> <num_columns> <pixel_size>"<<endl;
+		exit(0);
+	}
+	int num_rows = atoi(argv[1]);
+	int num_columns = atoi(argv[2]);
+	int pixel_size = atoi(argv[3]);
+
+	Grid grid(num_rows, num_columns);
 	cout<<"Grid created"<<endl;
 	cout<<"Running Prim's algorithm to generate maze"<<endl;
 
@@ -46,7 +55,9 @@ int main(int argc, char const *argv[])
 	timer.stop();
 	cout<<"Time taken = "<<timer.getTime()<<" ms"<<endl;
 	
-	grid.render(5);
-	cout<<"Grid rendered"<<endl;
+	if(pixel_size > 0) {
+		grid.render(pixel_size);
+		cout<<"Grid rendered"<<endl;
+	}
 	return 0;
 }

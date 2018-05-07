@@ -5,7 +5,7 @@
 
 using namespace std;
 
-std::default_random_engine generator(42L);
+std::default_random_engine generator;
 
 Grid::Grid(int nr, int nc)
 {
@@ -13,6 +13,7 @@ Grid::Grid(int nr, int nc)
 	num_columns = nc;
 	int count = 0;
 
+	generator.seed(SEED);
 	std::uniform_real_distribution<float> distribution(0.0,1.0);
 
 	for (int i = 0; i < num_rows; ++i)

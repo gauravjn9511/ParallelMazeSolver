@@ -1,6 +1,6 @@
 #!/bin/bash
 
-compile=0
+compile=1
 
 if [[ $compile -eq 1 ]]; then
 	echo "Compiling..."

@@ -1,4 +1,6 @@
 /*
+ * This code was taken from https://www8.cs.umu.se/kurser/5DV050/VT12/maze.tgz
+ *
  * This file contains a minimal interface for generating PGM (Portable
  * Gray Map) images.
  */

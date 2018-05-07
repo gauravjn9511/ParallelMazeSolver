@@ -2,7 +2,7 @@
 #include "grid.h"
 
 /*	Finds unvisited node with minimum distance from source	*/
-int minDistance(std::vector<float> &dist, std::vector<bool> &visited)
+int get_min_node(std::vector<float> &dist, std::vector<bool> &visited)
 {
 	float min = __FLT_MAX__;
 	int min_index = -1;
@@ -19,15 +19,16 @@ int minDistance(std::vector<float> &dist, std::vector<bool> &visited)
 
 void Grid::dijkstraShortestPath(Vertex src)
 {
-	std::vector<float> dist(num_rows * num_columns, __FLT_MAX__);	// stores distance of each node from source
-	std::vector<bool> visited(num_rows * num_columns, false);
-	std::vector<int> backtrack(num_rows * num_columns, -1);	// used to backtrack path from source to each node
+	int num_vertices = num_rows * num_columns;
+	std::vector<float> dist(num_vertices, __FLT_MAX__);	// stores distance of each node from source
+	std::vector<bool> visited(num_vertices, false);
+	std::vector<int> backtrack(num_vertices, -1);	// used to backtrack path from source to each node
 
 	dist[src.x * num_columns + src.y] = 0;
 
-	for (int i = 0; i < num_columns * num_rows - 1; i++)
+	for (int i = 0; i < num_vertices-1; i++)
 	{
-		int v = minDistance(dist, visited);
+		int v = get_min_node(dist, visited);
 
 		visited[v] = true;
 		for (int k = adj[v]; k < adj[v+1]; k++) {
@@ -40,7 +41,6 @@ void Grid::dijkstraShortestPath(Vertex src)
 				dist[u_index] = edges[k]->weight + dist[v];
 			}
 		}
-
 	}
 
 	/*	Mark nodes along the shortest path using backtracking	*/
